@@ -58,5 +58,16 @@ describe('TodoDataService', () => {
         service.deleteTodoById(2);
         expect(service.getAllTodos()).toEqual([]);
       }));
+
+    it("should not remove anything if todo with corresponding id is not found",
+      inject([TodoDataService], (service: TodoDataService) => {
+        let todo1 = new Todo({title: 'Hello 1', complete:false});
+        let todo2 = new Todo({title: 'Hello 2', complete:true});
+        service.addTodo(todo1);
+        service.addTodo(todo2);
+        expect(service.getAllTodos()).toEqual([todo1,todo2]);
+        service.deleteTodoById(3);
+        expect(service.getAllTodos()).toEqual([todo1,todo2]);
+      }));
   });
 });
